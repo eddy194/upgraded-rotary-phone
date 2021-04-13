@@ -1,0 +1,15 @@
+plugins {
+    id 'java'
+}
+
+group 'com.altapay'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation group: 'junit', name: 'junit', version: '4.6'
+    testImplementation group: 'org.mockito', name: 'mockito-all', version: '1.8.5'
+}
