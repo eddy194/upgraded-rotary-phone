@@ -33,4 +33,4 @@ We typically discuss IoC, DI, TDD among other topics, and have a pair programmin
 - https://en.wikipedia.org/wiki/SOLID
 - https://en.wikipedia.org/wiki/Extreme_programming_practices
 - http://en.wikipedia.org/wiki/Test-driven_development
-- https://www.kevinlondon.com/2015/05/05/code-review-best-practices.html
+- https://www.kevinlondon.com/2015/05/05/code-review-best-practices.html# upgraded-rotary-phone
