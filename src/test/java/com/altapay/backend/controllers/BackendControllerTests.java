@@ -34,16 +34,14 @@ public class BackendControllerTests {
 	}
 	
 	@Test
-	public void captureReservationGetsTheOrderFromTheRepository()
-	{
+	public void captureReservationGetsTheOrderFromTheRepository() throws Exception {
 		controller.capturePayment(ORDER_ID);
 		
 		verify(shopOrderRepository).loadShopOrder(ORDER_ID);
 	}
 
 	@Test
-	public void captureReservationMustInvokeCaptureOnTheOrder()
-	{
+	public void captureReservationMustInvokeCaptureOnTheOrder() throws Exception {
 		controller.capturePayment(ORDER_ID);
 		
 		verify(shopOrder).capture();

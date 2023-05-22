@@ -6,47 +6,71 @@ import com.altapay.backend.model.Inventory;
 import com.altapay.backend.model.OrderLine;
 import com.altapay.backend.model.Product;
 import com.altapay.backend.model.ShopOrder;
+import com.altapay.backend.repositories.InventoryRepository;
 import com.altapay.backend.repositories.ShopOrderRepository;
+import com.altapay.backend.services.InventoryService;
+import com.altapay.backend.services.MerchantApiService;
+import com.altapay.util.HttpUtil;
+import com.altapay.util.XpathUtil;
 
 public class BackendContainer implements IModelFactory {
 
-	public BackendController getBackendController() 
+	private ShopOrderRepository shopOrderRepository;
+	private InventoryService inventoryService;
+	private MerchantApiService merchantApiService;
+
+	public BackendController getBackendController()
 	{
 		return new BackendController(getShopOrderRepository());
 	}
 
-	// TODO: should be a singleton
-	public ShopOrderRepository getShopOrderRepository() 
+	// Singleton pattern
+	public synchronized ShopOrderRepository getShopOrderRepository()
 	{
-		return new ShopOrderRepository(this);
-	}
-	
-	@Override
-	public ShopOrder getShopOrder() 
-	{
-		// TODO: initialize a new ShopOrder with it's dependencies
-		return null;
+		if (shopOrderRepository == null) {
+			shopOrderRepository = new ShopOrderRepository(this);
+		}
+		return shopOrderRepository;
 	}
 
 	@Override
-	public Inventory getInventory() 
+	public ShopOrder getShopOrder()
 	{
-		// TODO: initialize a new Inventory with it's dependencies
-		return null;
+		return new ShopOrder(getInventoryService(), getMerchantApiService());
 	}
 
 	@Override
-	public OrderLine getOrderLine() 
+	public Inventory getInventory()
 	{
-		// TODO: initialize a new OrderLine with it's dependencies
-		return null;
+		return new Inventory();
 	}
 
 	@Override
-	public Product getProduct() 
+	public OrderLine getOrderLine()
 	{
-		// TODO: initialize a new Product with it's dependencies
-		return null;
+		return new OrderLine();
+	}
+
+	@Override
+	public Product getProduct()
+	{
+		return new Product();
+	}
+
+	public synchronized InventoryService getInventoryService()
+	{
+		if (inventoryService == null) {
+			inventoryService = new InventoryService(new InventoryRepository());
+		}
+		return inventoryService;
+	}
+
+	public synchronized MerchantApiService getMerchantApiService()
+	{
+		if (merchantApiService == null) {
+			merchantApiService = new MerchantApiService(new HttpUtil(), new XpathUtil());
+		}
+		return merchantApiService;
 	}
 
 }
